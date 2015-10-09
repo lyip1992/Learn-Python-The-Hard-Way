@@ -22,14 +22,19 @@ def get_slot(aMap, key, default=None):
   """
   bucket = get_bucket(aMap, key)
 
-  for i, kv in enumerate(aMap, key):
+  for i, kv in enumerate(bucket):
     k, v = kv
     if key == k:
       return i, k, v
 
   return -1, key, default
 
-def get(aMap, key, value):
+def get(aMap, key, default=None):
+  """Gets the value in a bucket for the given key, or the default."""
+  i, k, v = get_slot(aMap, key, default=default)
+  return v
+
+def set(aMap, key, value):
   """Sets the key to the value, replacing any existing value."""
   bucket = get_bucket(aMap, key)
   i, k, v = get_slot(aMap, key)
